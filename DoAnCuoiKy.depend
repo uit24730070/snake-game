@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1730561155 source:d:\code\kynangnghenghiep\game\doancuoiky\main.cpp
+	<iostream>
+	<conio.h>
+	<windows.h>
+	<vector>
+	<string>
+
+1730600308 source:d:\tiendnm\uit\knnn\snake-game\main.cpp
+	<iostream>
+	<conio.h>
+	<windows.h>
+	<vector>
+	<string>
+
