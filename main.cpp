@@ -20,16 +20,17 @@ char direction;               // Hướng di chuyển của rắn
 bool gameOver;
 
 void PrintTitle();
-void StartGame(string &playerName);
-void Setup();
-void HideCursor();
-void Input();
 void Draw(HANDLE hConsole, const string &playerName);
+void Setup();
+void Input();
 void Logic();
+void HideCursor();
+void GetName(string &playerName);
+void Play(string &playerName);
 int RestartGame();
 void clearTerminal();
 //======================================
-// Hàm vẽ bàn cờ và rắn
+// Hàm in tên game
 //======================================
 void PrintTitle()
 {
@@ -41,7 +42,9 @@ void PrintTitle()
     cout << "|_|  \\_\\/_/    \\_\\_| \\_| |_____/_/    \\_\\_| \\_| |_|  |_|\\____/_____|" << endl;
     cout << endl;
 }
-
+//======================================
+// Hàm vẽ bàn cờ và rắn
+//======================================
 void Draw(HANDLE hConsole, const string &playerName)
 {
     COORD coord;
@@ -116,6 +119,9 @@ void Setup()
     score = 0;
     snake.push_back(make_pair(x, y)); // Đầu rắn
 }
+//======================================
+// Hàm xoá màn hình console
+//======================================
 void clearTerminal()
 {
 #ifdef _WIN32
@@ -124,7 +130,9 @@ void clearTerminal()
     std::system("clear");
 #endif
 }
-// Hàm xử lý đầu vào
+//======================================
+// Hàm xử lý đầu vào từ bàn phím
+//======================================
 void Input()
 {
     if (_kbhit())
@@ -195,7 +203,7 @@ void Logic()
     {
         gameOver = true;
         return;
-    }
+    } // khi đâm vào tường
 
     for (size_t i = 1; i < snake.size(); i++)
     {
@@ -203,7 +211,7 @@ void Logic()
         {
             gameOver = true;
             return;
-        } // Tự đâm vào
+        } // Tự đâm vào thân
     }
 
     if (x == fruitX && y == fruitY)
@@ -225,7 +233,7 @@ void clearLines(int numLines)
 //======================================
 // Hàm nhập tên và bắt đầu game
 //======================================
-void StartGame(string &playerName)
+void GetName(string &playerName)
 {
     clearTerminal();
     PrintTitle();
@@ -244,7 +252,7 @@ void StartGame(string &playerName)
     cout << endl;
     while (playerName.empty())
     {
-        cout << "Nhap ten cua ban va nhan [ENTER] de bat dau choi: ";
+        cout << "Nhap ten cua ban va nhan (ENTER) de bat dau choi: ";
         getline(cin, playerName);
     }
     clearTerminal();
@@ -266,7 +274,7 @@ void HideCursor()
 //======================================
 void Play(string &playerName)
 {
-    StartGame(playerName);
+    GetName(playerName);
     Setup();
     HideCursor();
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
